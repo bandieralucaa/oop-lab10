@@ -45,8 +45,11 @@ public final class LambdaFilter extends JFrame {
         LOWERCASE("Convert to lowercase", String::toLowerCase),
         COUNT_CHARS("Count the number of chars", s -> String.valueOf(s.length())),
         COUNT_LINES("Count the number of lines", s -> Long.toString(s.chars().filter(e -> e == '\n').count() + 1)),
-        LIST_WORDS("List all the words in alphabetical order", s -> Arrays.stream(s.split(ANY_NON_WORD)).sorted().collect(Collectors.joining("\n"))),
-        COUNT_WORDS("Write the count for each word", s -> Arrays.stream(s.split(ANY_NON_WORD)).collect(Collectors.groupingBy(Function.identity(), Collectors.counting())).entrySet().stream().map(e -> e.getKey() + " -> " + e.getValue()).collect(Collectors.joining("\n")));
+        LIST_WORDS("List all the words in alphabetical order", s -> Arrays.stream(s.split(ANY_NON_WORD)).sorted()
+        .collect(Collectors.joining("\n"))),
+        COUNT_WORDS("Write the count for each word", s -> Arrays.stream(s.split(ANY_NON_WORD))
+        .collect(Collectors.groupingBy(Function.identity(), Collectors.counting())).entrySet().stream()
+        .map(e -> e.getKey() + " -> " + e.getValue()).collect(Collectors.joining("\n")));
 
         private final String commandName;
         private final Function<String, String> fun;
