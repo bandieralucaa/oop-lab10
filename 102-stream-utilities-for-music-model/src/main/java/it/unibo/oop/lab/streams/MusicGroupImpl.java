@@ -31,42 +31,42 @@ public final class MusicGroupImpl implements MusicGroup {
 
     @Override
     public Stream<String> orderedSongNames() {
-        return null;
+        return this.songs.stream().map(Song::getSongName).sorted();
     }
 
     @Override
     public Stream<String> albumNames() {
-        return null;
+        return this.albums.keySet().stream();
     }
 
     @Override
     public Stream<String> albumInYear(final int year) {
-        return null;
+        return this.albums.entrySet().stream().filter(e -> e.getValue() == year).map(Map.Entry::getKey);
     }
 
     @Override
     public int countSongs(final String albumName) {
-        return -1;
+        return (int) this.songs.stream().filter(s -> s.getAlbumName().isPresent() && s.getAlbumName().get().equals(albumName)).count();
     }
 
     @Override
     public int countSongsInNoAlbum() {
-        return -1;
+        return (int) this.songs.stream().filter(s -> !s.getAlbumName().isPresent()).count();
     }
 
     @Override
     public OptionalDouble averageDurationOfSongs(final String albumName) {
-        return null;
+        return this.songs.stream().filter(s -> s.getAlbumName().isPresent() && s.getAlbumName().get().equals(albumName)).mapToDouble(Song::getDuration).average();
     }
 
     @Override
     public Optional<String> longestSong() {
-        return null;
+        return this.songs.stream().max((s1, s2) -> Double.compare(s1.getDuration(), s2.getDuration())).map(Song::getSongName);
     }
 
     @Override
     public Optional<String> longestAlbum() {
-        return null;
+        return this.albums.keySet().stream().max((a1, a2) -> Double.compare(this.averageDurationOfSongs(a1).orElse(0), this.averageDurationOfSongs(a2).orElse(0)));
     }
 
     private static final class Song {
