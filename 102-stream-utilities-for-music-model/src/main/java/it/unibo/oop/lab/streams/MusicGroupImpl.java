@@ -46,7 +46,8 @@ public final class MusicGroupImpl implements MusicGroup {
 
     @Override
     public int countSongs(final String albumName) {
-        return (int) this.songs.stream().filter(s -> s.getAlbumName().isPresent() && s.getAlbumName().get().equals(albumName)).count();
+        return (int) this.songs.stream()
+        .filter(s -> s.getAlbumName().isPresent() && s.getAlbumName().get().equals(albumName)).count();
     }
 
     @Override
@@ -56,7 +57,9 @@ public final class MusicGroupImpl implements MusicGroup {
 
     @Override
     public OptionalDouble averageDurationOfSongs(final String albumName) {
-        return this.songs.stream().filter(s -> s.getAlbumName().isPresent() && s.getAlbumName().get().equals(albumName)).mapToDouble(Song::getDuration).average();
+        return this.songs.stream()
+        .filter(s -> s.getAlbumName().isPresent() && s.getAlbumName().get().equals(albumName))
+        .mapToDouble(Song::getDuration).average();
     }
 
     @Override
@@ -66,7 +69,8 @@ public final class MusicGroupImpl implements MusicGroup {
 
     @Override
     public Optional<String> longestAlbum() {
-        return this.albums.keySet().stream().max((a1, a2) -> Double.compare(this.averageDurationOfSongs(a1).orElse(0), this.averageDurationOfSongs(a2).orElse(0)));
+        return this.albums.keySet().stream()
+        .max((a1, a2) -> Double.compare(this.averageDurationOfSongs(a1).orElse(0), this.averageDurationOfSongs(a2).orElse(0)));
     }
 
     private static final class Song {
