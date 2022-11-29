@@ -92,7 +92,6 @@ public final class LambdaUtilities {
             });
         });
         return m;
-       
     }
 
     /**
